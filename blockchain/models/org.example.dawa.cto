@@ -1,0 +1,54 @@
+/**
+ * Sample business network definition.
+ */
+namespace org.example.dawa
+
+participant Manufacturer identified by manufacturerId {
+  o String manufacturerId
+  o String name
+  o String location
+}
+
+enum Type {
+    o WHOLESALE
+    o RETAIL
+}
+participant Distributor identified by distributorId {
+  o String distributorId
+  o Type type 
+  o String name
+  o String location
+}
+
+asset PharmaceuticalProduct identified by PharmaceuticalProductId {
+  o String PharmaceuticalProductId
+  o String ProductName
+  o Double Price
+  o DateTime Creation
+  o DateTime Expiration
+  o Double Latitude
+  o Double Longitude
+  o Boolean Counterfeit
+  o Boolean Completed
+  o String Status
+  --> Manufacturer manufacturer
+  --> Distributor distributor
+}
+
+transaction Counterfeit {
+  --> PharmaceuticalProduct asset
+  o Boolean CounterfeitNewVal
+}
+
+transaction Completed {
+  --> PharmaceuticalProduct asset
+  o Boolean CompletedNewVal
+}
+
+transaction ProductTxs {
+  --> PharmaceuticalProduct asset
+  o Double LatNewVal
+  o Double LongNewVal
+  o String StatusNewVal
+}
+
